@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BANZE - Pixel Adventure</title>
+
+    <!-- Menghubungkan file CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Layar utama game -->
+    <main class="game-container">
+
+        <header class="game-header">
+            <div>
+                <p class="eyebrow">PIXEL WORLD</p>
+                <h1>BANZE <span>ADVENTURE</span></h1>
+            </div>
+
+            <div class="status">
+                <div class="status-item">
+                    <span>🪙</span>
+                    <span id="coin-count">0</span>
+                </div>
+                <div class="status-item">
+                    <span>❤️</span>
+                    <span id="lives">3</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Area permainan digambar oleh Canvas -->
+        <div class="game-frame">
+            <canvas id="game-canvas" width="960" height="540">
+                Browser kamu tidak mendukung Canvas.
+            </canvas>
+
+            <div id="start-screen" class="overlay">
+                <p class="pixel-label">A NEW ADVENTURE</p>
+                <h2>PERJALANAN BANZE</h2>
+                <p>Jelajahi dunia pixel dan kumpulkan koin!</p>
+                <button id="start-button">MULAI PETUALANGAN</button>
+            </div>
+
+            <div id="game-message" class="game-message hidden"></div>
+        </div>
+
+       
+<!-- Kontrol untuk HP -->
+<div class="mobile-controls">
+    <div class="movement-buttons">
+        <button id="left-button" class="control-button" aria-label="Bergerak ke kiri">◀</button>
+        <button id="right-button" class="control-button" aria-label="Bergerak ke kanan">▶</button>
+    </div>
+
+    <button id="jump-button" class="control-button jump-button" aria-label="Melompat">LOMPAT ▲</button>
+</div>
+
+<!-- Petunjuk keyboard untuk komputer -->
+<div class="controls-info">
+    <div><kbd>A</kbd> <kbd>D</kbd> <span>Bergerak</span></div>
+    <div><kbd>←</kbd> <kbd>→</kbd> <span>Bergerak</span></div>
+    <div><kbd>SPACE</kbd> <span>Melompat</span></div>
+</div>
+
+
+
+        <footer>
+            <span>BANZE PIXEL ADVENTURE</span>
+            <span>WORLD 01 · GREEN FOREST</span>
+        </footer>
+
+    </main>
+
+    <!-- Menghubungkan file JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+</html>
+

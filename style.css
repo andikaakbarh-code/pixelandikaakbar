@@ -1,0 +1,363 @@
+
+/* =====================================
+   BANZE PIXEL ADVENTURE
+   STYLE.CSS
+   ===================================== */
+
+/* Pengaturan dasar */
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --dark: #17221f;
+    --panel: #24332d;
+    --green: #8bcf69;
+    --cream: #f5edcf;
+    --yellow: #ffcf58;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    padding: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--dark);
+    color: var(--cream);
+    font-family: "Courier New", monospace;
+}
+
+/* Kontainer utama */
+.game-container {
+    width: 100%;
+    max-width: 1100px;
+}
+
+/* Header game */
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 18px;
+}
+
+.eyebrow {
+    margin: 0 0 6px;
+    color: var(--green);
+    font-size: 11px;
+    letter-spacing: 4px;
+    font-weight: bold;
+}
+
+h1 {
+    margin: 0;
+    font-size: clamp(24px, 5vw, 42px);
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+h1 span {
+    color: var(--green);
+}
+
+.status {
+    display: flex;
+    gap: 10px;
+}
+
+.status-item {
+    min-width: 75px;
+    padding: 12px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    background: var(--panel);
+    border: 2px solid #3d5146;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Bingkai permainan */
+.game-frame {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: #80c9ed;
+    border: 4px solid #536b55;
+    box-shadow: 0 10px 0 #101814;
+}
+
+/* Canvas untuk menggambar dunia game */
+#game-canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+/* Layar pembuka */
+.overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+    background: rgba(19, 35, 30, 0.88);
+}
+
+.overlay h2 {
+    margin: 12px 0;
+    font-size: clamp(20px, 4vw, 34px);
+    color: var(--yellow);
+}
+
+.overlay p {
+    line-height: 1.7;
+}
+
+.pixel-label {
+    color: var(--green);
+    letter-spacing: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* Tombol mulai */
+button {
+    margin-top: 18px;
+    padding: 16px 22px;
+    border: 0;
+    background: var(--green);
+    color: #17221f;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 5px 0 #4c8540;
+}
+
+button:hover {
+    background: var(--yellow);
+}
+
+button:active {
+    transform: translateY(3px);
+    box-shadow: 0 2px 0 #4c8540;
+}
+
+/* Pesan menang atau game over */
+.game-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: max-content;
+    max-width: 90%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    text-align: center;
+    font-weight: bold;
+    line-height: 1.8;
+    color: var(--cream);
+    background: rgba(23, 34, 31, 0.95);
+    border: 3px solid var(--green);
+}
+
+.hidden {
+    display: none;
+}
+
+/* Petunjuk kontrol */
+.controls-info {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 26px;
+    color: #c4d2c6;
+    font-size: 12px;
+}
+
+.controls-info div {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+kbd {
+    min-width: 28px;
+    padding: 7px;
+    text-align: center;
+    color: var(--cream);
+    background: var(--panel);
+    border: 1px solid #506658;
+    box-shadow: 0 2px 0 #0c1510;
+    font-family: inherit;
+    font-weight: bold;
+}
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 25px;
+    color: #82968a;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+/* Tampilan HP */
+@media (max-width: 600px) {
+    body {
+        padding: 12px;
+        align-items: flex-start;
+    }
+
+    .game-header {
+        align-items: flex-start;
+    }
+
+    .status {
+        gap: 5px;
+    }
+
+    .status-item {
+        min-width: auto;
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .controls-info {
+        gap: 12px;
+    }
+
+    footer {
+        font-size: 8px;
+    }
+}
+
+/* =====================================
+   KONTROL LAYAR SENTUH UNTUK HP
+===================================== */
+
+.mobile-controls {
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+    padding: 12px;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.movement-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.control-button {
+    min-width: 65px;
+    min-height: 60px;
+    margin: 0;
+    padding: 12px;
+    border: 2px solid #8bcf69;
+    border-radius: 10px;
+    background: #24332d;
+    color: #f5edcf;
+    font-family: "Courier New", monospace;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 4px 0 #101814;
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.control-button:active {
+    background: #8bcf69;
+    color: #17221f;
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #101814;
+}
+
+.jump-button {
+    min-width: 105px;
+    background: #8bcf69;
+    color: #17221f;
+    font-size: 13px;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+        align-items: flex-start;
+    }
+
+    .mobile-controls {
+        display: flex;
+    }
+
+    .controls-info {
+        font-size: 10px;
+        gap: 10px;
+    }
+
+    .game-header {
+        gap: 10px;
+    }
+
+    .game-frame {
+        border-width: 3px;
+    }
+}
+/* KONTROL GAME UNTUK HP */
+.mobile-controls {
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 12px;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+.movement-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.mobile-controls button {
+    width: 60px;
+    height: 60px;
+    border: 2px solid white;
+    border-radius: 15px;
+    background: #263c2d;
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+    touch-action: none;
+}
+
+.mobile-controls button:active {
+    background: #527b4c;
+    transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+    .mobile-controls {
+        display: flex;
+    }
+
+    #game-canvas {
+        width: 100%;
+        height: auto;
+        touch-action: none;
+    }
+}
