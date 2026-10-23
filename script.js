@@ -123,32 +123,79 @@ const MAX_FALL_SPEED = 12;
            height: 65 + (Math.abs(Math.sin(x * 0.17)) * 40)
        });
    }
-   // ==========================================
-// KONTROL LAYAR SENTUH BANZE
-// ==========================================
+  
+/* ==========================================
+   KONTROL SENTUH HP BANZE
+   ========================================== */
 
-function holdButton(buttonId, keyName) {
-    const button = document.getElementById(buttonId);
+// Mendukung dua kemungkinan nama ID tombol HTML
+const leftButton =
+document.getElementById("leftButton") ||
+document.getElementById("left-button");
 
-    if (!button) return;
+const rightButton =
+document.getElementById("rightButton") ||
+document.getElementById("right-button");
 
-    button.addEventListener("pointerdown", function (event) {
-        event.preventDefault();
-        keys[keyName] = true;
-        button.setPointerCapture(event.pointerId);
-    });
+const jumpButton =
+document.getElementById("jumpButton") ||
+document.getElementById("jump-button");
 
-    function releaseButton(event) {
-        event.preventDefault();
-        keys[keyName] = false;
+// Membuat tombol kiri dan kanan berfungsi
+function pasangTombolGerak(tombol, namaTombol) {
+if (!tombol) {
+    console.warn("Tombol tidak ditemukan:", namaTombol);
+    return;
+}
+
+tombol.style.touchAction = "none";
+
+tombol.addEventListener("pointerdown", function(event) {
+    event.preventDefault();
+
+    keys[namaTombol] = true;
+
+    if (tombol.setPointerCapture) {
+        tombol.setPointerCapture(event.pointerId);
+    }
+});
+
+function lepaskanTombol(event) {
+    event.preventDefault();
+    keys[namaTombol] = false;
+}
+
+tombol.addEventListener("pointerup", lepaskanTombol);
+tombol.addEventListener("pointercancel", lepaskanTombol);
+tombol.addEventListener("lostpointercapture", function() {
+    keys[namaTombol] = false;
+});
+}
+
+// Tombol gerakan harus menggunakan huruf kecil
+pasangTombolGerak(leftButton, "arrowleft");
+pasangTombolGerak(rightButton, "arrowright");
+
+// Membuat tombol lompat berfungsi
+if (jumpButton) {
+jumpButton.style.touchAction = "none";
+
+jumpButton.addEventListener("pointerdown", function(event) {
+    event.preventDefault();
+
+    if (jumpButton.setPointerCapture) {
+        jumpButton.setPointerCapture(event.pointerId);
     }
 
-    button.addEventListener("pointerup", releaseButton);
-    button.addEventListener("pointercancel", releaseButton);
-    button.addEventListener("lostpointercapture", function () {
-        keys[keyName] = false;
-    });
+    // Lompat langsung saat tombol disentuh
+    if (gameStarted && !gameOver && player.onGround) {
+        player.vy = JUMP_POWER;
+        player.onGround = false;
+    }
+});
 }
+
+
 
 holdButton("leftButton", "ArrowLeft");
 holdButton("rightButton", "ArrowRight");
@@ -161,54 +208,7 @@ holdButton("jumpButton", "ArrowUp");
    document.addEventListener("keydown", function(event) {
        const key = event.key.toLowerCase();
        
-/* =====================================
-   KONTROL TOUCHSCREEN UNTUK HP
-===================================== */
 
-const leftButton = document.getElementById("left-button");
-const rightButton = document.getElementById("right-button");
-const jumpButton = document.getElementById("jump-button");
-
-// Menahan tombol kiri atau kanan agar Banze terus bergerak
-function pasangTombolGerak(tombol, namaTombol) {
-    if (!tombol) return;
-
-    tombol.addEventListener("pointerdown", function (event) {
-        event.preventDefault();
-        keys[namaTombol] = true;
-
-        if (tombol.setPointerCapture) {
-            tombol.setPointerCapture(event.pointerId);
-        }
-    });
-
-    function lepaskanTombol(event) {
-        keys[namaTombol] = false;
-    }
-
-    tombol.addEventListener("pointerup", lepaskanTombol);
-    tombol.addEventListener("pointercancel", lepaskanTombol);
-    tombol.addEventListener("lostpointercapture", lepaskanTombol);
-}
-
-// Tombol kiri dan kanan
-pasangTombolGerak(leftButton, "arrowleft");
-pasangTombolGerak(rightButton, "arrowright");
-
-// Tombol lompat
-if (jumpButton) {
-    jumpButton.addEventListener("pointerdown", function (event) {
-        event.preventDefault();
-
-        if (jumpButton.setPointerCapture) {
-            jumpButton.setPointerCapture(event.pointerId);
-        }
-
-        keys[" "] = true;
-    });
-
-    function lepaskanLompatan() {
-        keys[" "] = false;
     }
 
     jumpButton.addEventListener("pointerup", lepaskanLompatan);
